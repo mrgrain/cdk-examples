@@ -1,0 +1,22 @@
+{
+  "name": "@mrgrain/cdk-examples",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Public collection of examples for using the AWS CDK",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrgrain/cdk-examples.git"
+  },
+  "author": "Moritz Kornher <mail@moritzkornher.de>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mrgrain/cdk-examples/issues"
+  },
+  "homepage": "https://github.com/mrgrain/cdk-examples#readme",
+  "engines": {
+    "node": ">=16",
+    "npm": "DO_NOT_USE_NPM",
+    "pnpm": ">=6"
+  }
+}
