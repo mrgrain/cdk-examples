@@ -1,0 +1,35 @@
+{
+  "name": "@mrgrain/lambda-code-deploy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Deploy a Lambda with Code Deploy, using advanced deployment patterns",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrgrain/cdk-examples.git",
+    "directory": "examples/lambda-code-deploy"
+  },
+  "author": "Moritz Kornher <mail@moritzkornher.de>",
+  "license": "MIT",
+  "scripts": {
+    "diff": "cdk diff",
+    "deploy": "cdk deploy",
+    "synth": "cdk synth -q",
+    "watch": "cdk watch"
+  },
+  "dependencies": {
+    "@mrgrain/cdk-esbuild": "^3.2.0",
+    "aws-cdk-lib": "2.12.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "ts4.5",
+    "aws-cdk": "2.12.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.5"
+  },
+  "engines": {
+    "node": ">=16",
+    "npm": "DO_NOT_USE_NPM",
+    "pnpm": ">=6"
+  }
+}
