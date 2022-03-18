@@ -14,7 +14,6 @@ export class BuilderStack extends Stack {
       version: "1.0.0",
       definitionPath: "components/hello-world.yml",
       validateDefinition: true,
-      awstoePath: "./awstoe",
     });
   }
 }

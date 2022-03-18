@@ -1,6 +1,6 @@
+import { DockerImage } from "aws-cdk-lib";
 import { CfnComponent } from "aws-cdk-lib/aws-imagebuilder";
 import { Asset } from "aws-cdk-lib/aws-s3-assets";
-import { execSync } from "child_process";
 import { Construct } from "constructs";
 
 export interface ComponentProps {
@@ -9,7 +9,6 @@ export interface ComponentProps {
   version: string;
   definitionPath: string;
   validateDefinition?: boolean;
-  awstoePath?: string;
 }
 
 export class Component extends Construct {
@@ -24,7 +23,6 @@ export class Component extends Construct {
       version,
       definitionPath: path,
       validateDefinition = false,
-      awstoePath,
     } = props;
 
     const componentDefinition = new Asset(this, "Definition", {
@@ -42,49 +40,28 @@ export class Component extends Construct {
 
     if (validateDefinition) {
       this.node.addValidation({
-        validate: () => this.validateComponentDefinition(path, awstoePath),
+        validate: () => this.validateComponentDefinition(path),
       });
     }
   }
 
-  protected validateComponentDefinition(path: string, awstoe = "awstoe") {
-    const parseOutput = (
-      stdout: Buffer
-    ): { validationStatus: boolean; message: string } => {
-      const result = JSON.parse(stdout.toString());
-      return result;
-    };
-
+  protected validateComponentDefinition(path: string) {
     try {
-      execSync(`${awstoe} validate --documents ${path}`, {
-        stdio: "pipe",
+      new DockerImage("oppara/awstoe:latest").run({
+        command: ["awstoe", "validate", "--documents", path],
+        volumes: [
+          {
+            containerPath: "/data",
+            hostPath: process.cwd(),
+          },
+        ],
+        workingDirectory: "/data",
       });
-
       return [];
     } catch (e: any) {
-      if ("output" in e) {
-        const [, stdout, stderr] = e.output;
-
-        if (stdout.toString()) {
-          const { message } = parseOutput(stdout);
-          return [`${path}: ${message}`];
-        }
-
-        if (stderr.includes("not found")) {
-          return [
-            "awstoe executable not found in $PATH",
-            "Please install AWSTOE, see https://docs.aws.amazon.com/imagebuilder/latest/userguide/toe-get-started.html",
-          ];
-        }
-
-        return [stderr];
-      }
-
-      if ("message" in e) {
-        return [e.message];
-      }
-
-      return ["Something went wrong", e];
+      return [
+        `${path}: AWSTOE validation failed, please check output for further details`,
+      ];
     }
   }
 }
