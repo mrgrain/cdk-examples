@@ -1,0 +1,34 @@
+{
+  "name": "@mrgrain/ec2-image-builder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "EC2 Image Builder Resources in CDK",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrgrain/cdk-examples.git",
+    "directory": "examples/ec2-image-builder"
+  },
+  "author": "Moritz Kornher <mail@moritzkornher.de>",
+  "license": "MIT",
+  "scripts": {
+    "diff": "cdk diff",
+    "deploy": "cdk deploy",
+    "synth": "cdk synth -q",
+    "watch": "cdk watch"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.17.0",
+    "constructs": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "ts4.5",
+    "aws-cdk": "2.17.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.5"
+  },
+  "engines": {
+    "node": ">=16",
+    "npm": "DO_NOT_USE_NPM",
+    "pnpm": ">=6"
+  }
+}
