@@ -1,28 +1,34 @@
 import { DockerImage } from "aws-cdk-lib";
-import { CfnComponent } from "aws-cdk-lib/aws-imagebuilder";
+import { CfnComponent, CfnImageRecipe } from "aws-cdk-lib/aws-imagebuilder";
 import { Asset } from "aws-cdk-lib/aws-s3-assets";
 import { Construct } from "constructs";
 
-export interface ComponentProps {
-  name: string;
-  platform: string;
-  version: string;
-  definitionPath: string;
-  validateDefinition?: boolean;
+export interface IComponent {
+  componentArn: string;
+  parameters?: CfnImageRecipe.ComponentParameterProperty[];
 }
 
-export class Component extends Construct {
+export interface ComponentProps {
+  definitionPath: string;
+  name: string;
+  platform: string;
+  validateDefinition?: boolean;
+  version: string;
+}
+
+export class Component extends Construct implements IComponent {
+  public readonly componentArn: string;
   public readonly uri: string;
 
   public constructor(scope: Construct, id: string, props: ComponentProps) {
     super(scope, id);
 
     const {
+      definitionPath: path,
       name,
       platform,
-      version,
-      definitionPath: path,
       validateDefinition = false,
+      version,
     } = props;
 
     const componentDefinition = new Asset(this, "Definition", {
@@ -31,7 +37,7 @@ export class Component extends Construct {
 
     this.uri = componentDefinition.s3ObjectUrl;
 
-    new CfnComponent(this, "Resource", {
+    const component = new CfnComponent(this, "Resource", {
       name,
       platform,
       version,
@@ -43,6 +49,8 @@ export class Component extends Construct {
         validate: () => this.validateComponentDefinition(path),
       });
     }
+
+    this.componentArn = component.attrArn;
   }
 
   protected validateComponentDefinition(path: string) {
