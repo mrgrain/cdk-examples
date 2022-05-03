@@ -1,3 +1,4 @@
+import * as crypto from "node:crypto";
 import { CfnImageRecipe } from "aws-cdk-lib/aws-imagebuilder";
 import { Construct } from "constructs";
 import { Component } from "./component";
@@ -8,9 +9,9 @@ export interface IImageRecipe {
 
 export interface ImageRecipeProps {
   components?: Component[];
-  name: string;
+  name?: string;
   parentImage: string;
-  version: string;
+  version?: string;
   volumeSize?: number;
 }
 
@@ -22,14 +23,13 @@ export class ImageRecipe extends Construct implements IImageRecipe {
 
     const {
       components = [],
-      name,
       parentImage,
-      version,
+      version = "1.0.0",
       volumeSize = 30,
     } = props;
 
     const recipeProps = {
-      name,
+      name: this.autoName(props),
       components: components.map((component) => ({
         componentArn: component.componentArn.toString(),
       })),
@@ -51,6 +51,35 @@ export class ImageRecipe extends Construct implements IImageRecipe {
     const cfnImageRecipe = new CfnImageRecipe(this, "Resource", recipeProps);
 
     this.imageRecipeArn = cfnImageRecipe.ref;
+  }
+
+  protected autoName(props: ImageRecipeProps): string {
+    const {
+      name = this.node.id,
+      components,
+      parentImage,
+      version,
+      volumeSize,
+    } = props;
+
+    if (version) {
+      return name;
+    }
+
+    const sha256 = crypto
+      .createHash("sha256")
+      .update(
+        JSON.stringify({
+          name,
+          parentImage,
+          version,
+          volumeSize,
+        })
+      )
+      .update(JSON.stringify(components?.map((component) => component.name)));
+    const hash = sha256.digest("hex").slice(0, 8);
+
+    return [name, hash].join("-");
   }
 
   public static fromImageRecipeArn(

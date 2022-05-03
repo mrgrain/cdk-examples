@@ -22,7 +22,7 @@ export class BuilderStack extends Stack {
       validateDefinition: true,
     });
 
-    const imageRecipe = new ImageRecipe(this, "Recipe", {
+    const imageRecipe = new ImageRecipe(this, "HelloWorldRecipe", {
       components: [helloWorld],
       name: "hello-world-recipe",
       parentImage:
@@ -48,6 +48,23 @@ export class BuilderStack extends Stack {
       ),
       name: "HelloWorld",
       schedule: Schedule.rate(Duration.days(7)),
+    });
+
+    const autoVersionedComponent = new Component(
+      this,
+      "AutoVersionedComponent",
+      {
+        platform: "Linux",
+        definitionPath: "components/hello-world.yml",
+        validateDefinition: true,
+      }
+    );
+
+    const autoVersionedRecipe = new ImageRecipe(this, "AutoVersionedRecipe", {
+      components: [autoVersionedComponent],
+      parentImage:
+        "arn:aws:imagebuilder:eu-west-1:aws:image/ubuntu-server-20-lts-x86/x.x.x",
+      volumeSize: 20,
     });
   }
 }
