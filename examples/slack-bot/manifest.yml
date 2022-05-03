@@ -2,18 +2,30 @@ display_information:
   name: CDK Slack Bot
   description: CDK example showing how to create a simple yet powerful Slack bot
   background_color: "#0000AA"
-  long_description:
-    CDK example showing how to create a simple yet powerful Slack bot.
-    It uses Lambda functions, Function URLs and SQS queues. Most of this could be abstracted out into a CDK Construct.
+  long_description: CDK example showing how to create a simple yet powerful Slack bot. It uses Lambda functions, Function URLs and SQS queues. Most of this could be abstracted out into a CDK Construct.
 features:
   bot_user:
     display_name: CDK Slack Bot
-    always_online: false
+    always_online: true
 oauth_config:
   scopes:
     bot:
       - chat:write
+      - chat:write.public
+      - channels:read
+      - channels:history
+      - app_mentions:read
+      - im:history
 settings:
+  event_subscriptions:
+    request_url: https://s4gf5rhmcgqwi66mlioh2pydqq0hbpef.lambda-url.eu-west-1.on.aws/
+    bot_events:
+      - app_mention
+      - message.channels
+      - message.im
+  interactivity:
+    is_enabled: true
+    request_url: https://s4gf5rhmcgqwi66mlioh2pydqq0hbpef.lambda-url.eu-west-1.on.aws/
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false
