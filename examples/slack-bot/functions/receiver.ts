@@ -5,6 +5,7 @@ import {
 } from "@slack/bolt/dist/receivers/AwsLambdaReceiver";
 import { Handler } from "aws-lambda";
 import { Config, getConfig } from "../src/config";
+import * as logger from "../src/logger";
 
 let CONFIG: Config;
 
@@ -34,15 +35,28 @@ export const handler: Handler<AwsEvent, AwsResponse> = async (
     retryNum,
     retryReason,
     customProperties,
+    ack,
   }: ReceiverEvent) => {
-    console.log({
+    const incomingEvent = {
       body,
       retryNum,
       retryReason,
       customProperties,
+    };
+
+    logger.debug("IncomingEvent", {
+      incomingEvent,
     });
+
+    await ack();
   };
 
   const handler = await awsLambdaReceiver.start();
-  return handler(event, context, callback);
+  const response = await handler(event, context, callback);
+
+  logger.debug("CreatedResponse", {
+    response,
+  });
+
+  return response;
 };
