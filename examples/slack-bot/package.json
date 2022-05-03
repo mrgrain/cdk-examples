@@ -19,6 +19,7 @@
     "watch": "cdk watch --hotswap"
   },
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.82.0",
     "@aws-sdk/client-ssm": "^3.82.0",
     "@mrgrain/cdk-esbuild": "^3.2.0",
     "@slack/bolt": "^3.11.0",

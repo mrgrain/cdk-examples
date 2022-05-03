@@ -18,14 +18,14 @@ oauth_config:
       - im:history
 settings:
   event_subscriptions:
-    request_url: https://s4gf5rhmcgqwi66mlioh2pydqq0hbpef.lambda-url.eu-west-1.on.aws/
+    request_url: https://36wpvj5ftaq54cuzkk2i2o32ca0oseee.lambda-url.eu-west-1.on.aws/
     bot_events:
       - app_mention
       - message.channels
       - message.im
   interactivity:
     is_enabled: true
-    request_url: https://s4gf5rhmcgqwi66mlioh2pydqq0hbpef.lambda-url.eu-west-1.on.aws/
+    request_url: https://36wpvj5ftaq54cuzkk2i2o32ca0oseee.lambda-url.eu-west-1.on.aws/
   org_deploy_enabled: false
   socket_mode_enabled: false
   token_rotation_enabled: false

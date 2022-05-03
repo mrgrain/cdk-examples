@@ -1,3 +1,4 @@
+import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
 import { App, AwsLambdaReceiver, ReceiverEvent } from "@slack/bolt";
 import {
   AwsEvent,
@@ -24,11 +25,12 @@ export const handler: Handler<AwsEvent, AwsResponse> = async (
     signingSecret: SLACK_SIGNING_SECRET,
   });
 
-  // Initializes your app with your bot token and the AWS Lambda ready receiver
   const app = new App({
     token: SLACK_BOT_TOKEN,
     receiver: awsLambdaReceiver,
   });
+
+  const sqsClient = new SQSClient({});
 
   app.processEvent = async ({
     body,
@@ -47,6 +49,16 @@ export const handler: Handler<AwsEvent, AwsResponse> = async (
     logger.debug("IncomingEvent", {
       incomingEvent,
     });
+
+    const sendMessage = new SendMessageCommand({
+      QueueUrl: process.env.MESSAGE_QUEUE_URL!,
+      MessageBody: JSON.stringify(incomingEvent),
+    });
+    try {
+      await sqsClient.send(sendMessage);
+    } catch (error) {
+      logger.error("QueuingFailed", { error });
+    }
 
     await ack();
   };

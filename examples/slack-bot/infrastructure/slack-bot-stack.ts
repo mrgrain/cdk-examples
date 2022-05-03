@@ -1,8 +1,8 @@
-import { TypeScriptCode } from "@mrgrain/cdk-esbuild";
-import { CfnOutput, Stack, StackProps } from "aws-cdk-lib";
-import { Grant } from "aws-cdk-lib/aws-iam";
-import { Function, FunctionUrlAuthType, Runtime } from "aws-cdk-lib/aws-lambda";
+import { CfnOutput, Duration, Stack, StackProps } from "aws-cdk-lib";
+import { Queue } from "aws-cdk-lib/aws-sqs";
+
 import { Construct } from "constructs";
+import { SlackReceiver } from "./receiver";
 
 interface SlackBotStackProps extends StackProps {
   ssmSecureConfigPath: string;
@@ -14,34 +14,17 @@ export class SlackBotStack extends Stack {
 
     const { ssmSecureConfigPath } = props;
 
-    const ssmSecureConfigPathArn = Stack.of(this).formatArn({
-      service: "ssm",
-      resource: "parameter",
-      resourceName: ssmSecureConfigPath.substring(1),
-    });
-
-    const messageReceiver = new Function(this, "Lambda", {
-      runtime: Runtime.NODEJS_14_X,
-      handler: "receiver.handler",
-      memorySize: 512,
-      code: new TypeScriptCode("./functions/receiver.ts", {
-        buildOptions: {
-          sourcemap: true,
-        },
-      }),
-      environment: {
-        NODE_OPTIONS: "--enable-source-maps",
-        CONFIG_PATH: ssmSecureConfigPath,
+    const messageQueue = new Queue(this, "MessageQueue", {
+      retentionPeriod: Duration.minutes(5),
+      deadLetterQueue: {
+        maxReceiveCount: 3,
+        queue: new Queue(this, "MessageDLQ"),
       },
     });
-    Grant.addToPrincipal({
-      grantee: messageReceiver,
-      actions: ["ssm:GetParametersByPath"],
-      resourceArns: [ssmSecureConfigPathArn],
-    });
 
-    const botEndpoint = messageReceiver.addFunctionUrl({
-      authType: FunctionUrlAuthType.NONE,
+    const botEndpoint = new SlackReceiver(this, "Receiver", {
+      ssmSecureConfigPath,
+      messageQueue,
     });
 
     new CfnOutput(this, "EndpointUrl", {
