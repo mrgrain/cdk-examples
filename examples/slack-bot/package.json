@@ -23,6 +23,7 @@
     "@aws-sdk/client-ssm": "^3.82.0",
     "@mrgrain/cdk-esbuild": "^3.2.0",
     "@slack/bolt": "^3.11.0",
+    "@slack/logger": "^3.0.0",
     "aws-cdk-lib": "2.22.0",
     "constructs": "^10.0.0"
   },

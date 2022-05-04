@@ -7,6 +7,12 @@ features:
   bot_user:
     display_name: CDK Slack Bot
     always_online: true
+  slash_commands:
+    - command: /echo
+      url: https://36wpvj5ftaq54cuzkk2i2o32ca0oseee.lambda-url.eu-west-1.on.aws/
+      description: Echo echo echo!
+      usage_hint: Repeat after me....
+      should_escape: false
 oauth_config:
   scopes:
     bot:
@@ -16,6 +22,7 @@ oauth_config:
       - channels:history
       - app_mentions:read
       - im:history
+      - commands
 settings:
   event_subscriptions:
     request_url: https://36wpvj5ftaq54cuzkk2i2o32ca0oseee.lambda-url.eu-west-1.on.aws/
