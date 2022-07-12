@@ -2,3 +2,4 @@ packages:
   - "examples/**"
   - "libs/**"
   - "!**/test/**"
+  - "!examples/lambda-deps-layer"

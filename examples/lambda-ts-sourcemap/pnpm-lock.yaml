@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@mrgrain/cdk-esbuild': ^3.2.0
@@ -12,16 +12,16 @@ specifiers:
   typescript: ^4.5
 
 dependencies:
-  '@mrgrain/cdk-esbuild': 3.2.0_a427a3d75933779fd0e07033c95db840
+  '@mrgrain/cdk-esbuild': 3.2.0_uqt2hv2zgn3z7uhaoaz4sxnyia
   aws-cdk-lib: 2.22.0_constructs@10.0.65
   constructs: 10.0.65
 
 devDependencies:
   '@types/aws-lambda': 8.10.95
-  '@types/node': 17.0.31
+  '@types/node': 18.0.3
   aws-cdk: 2.22.0
   npm-check-updates: 12.5.11
-  ts-node: 10.5.0_a2a88f41d307ab51139076092325a40f
+  ts-node: 10.5.0_ovlyncsnb6aq7tfnu232nfoepa
   typescript: 4.5.5
 
 packages:
@@ -46,7 +46,7 @@ packages:
     resolution: {integrity: sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==}
     dev: true
 
-  /@mrgrain/cdk-esbuild/3.2.0_a427a3d75933779fd0e07033c95db840:
+  /@mrgrain/cdk-esbuild/3.2.0_uqt2hv2zgn3z7uhaoaz4sxnyia:
     resolution: {integrity: sha512-aJH+M5o5mBafbrJ31yeuaFKDAKkgMeMJAey4o76Niu1WHC+WBppB1pTCiWsr5ZrcSelCQZE8duh3qbYsLfAyDQ==}
     peerDependencies:
       aws-cdk-lib: ^2.0.0
@@ -100,6 +100,8 @@ packages:
       promise-retry: 2.0.1
       semver: 7.3.5
       which: 2.0.2
+    transitivePeerDependencies:
+      - bluebird
     dev: true
 
   /@npmcli/installed-package-contents/1.0.7:
@@ -140,6 +142,7 @@ packages:
       node-gyp: 9.0.0
       read-package-json-fast: 2.0.3
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -180,8 +183,20 @@ packages:
     resolution: {integrity: sha512-wGtzLbd04EmqhFjTZmXgLzvmhDdyVU7AMo/JkiPmA2VUdBFQfUBQFCEzaVVK+f1PP5aWx1ejnb7K/8MXYI/frQ==}
     dev: true
 
-  /@types/node/17.0.31:
-    resolution: {integrity: sha512-AR0x5HbXGqkEx9CadRH3EBYx/VkiUgZIhP4wvPn/+5KIsgpNoyFaRlVe0Zlx9gRtg8fA06a9tskE2MSN7TcG4Q==}
+  /@types/keyv/3.1.4:
+    resolution: {integrity: sha512-BQ5aZNSCpj7D6K2ksrRCTmKRLEpnPvWDiLPfoGyhZ++8YtiK9d/3DBKPJgry359X/P1PfruyYwvnvwFjuEiEIg==}
+    dependencies:
+      '@types/node': 18.0.3
+    dev: true
+
+  /@types/node/18.0.3:
+    resolution: {integrity: sha512-HzNRZtp4eepNitP+BD6k2L6DROIDG4Q0fm4x+dwfsr6LGmROENnok75VGw40628xf+iR24WeMFcHuuBDUAzzsQ==}
+    dev: true
+
+  /@types/responselike/1.0.0:
+    resolution: {integrity: sha512-85Y2BjiufFzaMIlvJDvTTB8Fxl2xfLo4HgmHzVBz08w4wDePCTjYw66PdrolO0kzli3yam/YCgRufyo1DdQVTA==}
+    dependencies:
+      '@types/node': 18.0.3
     dev: true
 
   /abbrev/1.1.1:
@@ -379,6 +394,8 @@ packages:
       ssri: 9.0.0
       tar: 6.1.11
       unique-filename: 1.1.1
+    transitivePeerDependencies:
+      - bluebird
     dev: true
 
   /cacheable-request/6.1.0:
@@ -971,6 +988,8 @@ packages:
     dependencies:
       '@sindresorhus/is': 0.14.0
       '@szmarczak/http-timer': 1.1.2
+      '@types/keyv': 3.1.4
+      '@types/responselike': 1.0.0
       cacheable-request: 6.1.0
       decompress-response: 3.3.0
       duplexer3: 0.1.4
@@ -1330,6 +1349,7 @@ packages:
       socks-proxy-agent: 6.2.0
       ssri: 9.0.0
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -1459,6 +1479,7 @@ packages:
       tar: 6.1.11
       which: 2.0.2
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -1526,6 +1547,7 @@ packages:
       update-notifier: 5.1.0
       yaml: 1.10.2
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -1582,6 +1604,7 @@ packages:
       npm-package-arg: 9.0.2
       proc-log: 2.0.1
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -1683,6 +1706,7 @@ packages:
       ssri: 9.0.0
       tar: 6.1.11
     transitivePeerDependencies:
+      - bluebird
       - supports-color
     dev: true
 
@@ -1734,6 +1758,11 @@ packages:
 
   /promise-inflight/1.0.1:
     resolution: {integrity: sha1-mEcocL8igTL8vdhoEputEsPAKeM=}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
     dev: true
 
   /promise-retry/2.0.1:
@@ -2062,7 +2091,7 @@ packages:
       is-number: 7.0.0
     dev: true
 
-  /ts-node/10.5.0_a2a88f41d307ab51139076092325a40f:
+  /ts-node/10.5.0_ovlyncsnb6aq7tfnu232nfoepa:
     resolution: {integrity: sha512-6kEJKwVxAJ35W4akuiysfKwKmjkbYxwQMTBaAxo9KKAx/Yd26mPUyhGz3ji+EsJoAgrLqVsYHNuuYwQe22lbtw==}
     hasBin: true
     peerDependencies:
@@ -2081,7 +2110,7 @@ packages:
       '@tsconfig/node12': 1.0.9
       '@tsconfig/node14': 1.0.1
       '@tsconfig/node16': 1.0.2
-      '@types/node': 17.0.31
+      '@types/node': 18.0.3
       acorn: 8.7.0
       acorn-walk: 8.2.0
       arg: 4.1.3

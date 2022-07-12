@@ -41,6 +41,6 @@
   "engines": {
     "node": ">=16",
     "npm": ">=8",
-    "pnpm": "PLEASE_USE_NPM_FOR_THIS_EXAMPLE"
+    "pnpm": "PLEASE_USE_NPM"
   }
 }
