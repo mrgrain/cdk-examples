@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-
-    <IsPackable>false</IsPackable>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable> 
+    <!-- <StartupObject>DotnetExample.Tests.IntegTestExampleTwo</StartupObject> -->
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,6 +14,7 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
 
     <PackageReference Include="Amazon.CDK.Lib" Version="2.54.0" />
+    <PackageReference Include="Amazon.CDK.IntegTests.Alpha" Version="2.54.0-alpha.0" />
     <PackageReference Include="Constructs" Version="[10.0.0,11.0.0)" />
   </ItemGroup>
 
